@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Parâmetros do conversor
+
 Vin = 12  
 L = 1e-3  
 R = 10    
@@ -11,24 +11,25 @@ D = 0.5
 
 # Tempo de simulação
 Ts = 1 / Fs
-t = np.arange(0, 0.002, Ts)
+t = np.arange(0, 0.002, Ts)  # Vetor de tempo de 0 até 2 ms com passo de 10microsegundos Ts
 
 # Corrente no indutor
-I_L = np.zeros_like(t)
-V_out = np.zeros_like(t)
-# Ciclo "on"
-for i in range(len(t)):
-    if t[i] < D * Ts:
+I_L = np.zeros_like(t)     #np.zeros_lik... cria um vetor do mesmo tamanho preenchido com zeros.
+V_out = np.zeros_like(t)   #Para armazenar valores caculados. Para o gráfico
+
+# Ciclo "on" / Primeiro ciclo    SIMULAÇÃO DE APENAS UM CICLO (corrente subindo e descendo linerarmente
+for i in range(len(t)):      # ele não atualiza o valor anterior. Ele aplica as equações de um único ciclo
+    if t[i] < D * Ts:        # a todos os instantes de tempo sem atualizar as condições iniciais de cada ciclo
         I_L[i] = Vin/L * t[i]
         V_out[i] = Vin * D * (t[i]/Ts)
     else:
         I_L[i] = Vin/L * (Ts * D) - Vin/R * (t[i]-Ts*D)
         V_out[i] = Vin*D
 
-# Tensão de saída
+
 V_out = I_L * R
 
-# Mostrar alguns valores
+# Mostrar os 10 primeiros valores e plotar o gráfico
 print("Tempo (s):", t[:10])
 print("Corrente no Indutor (A):", I_L[:10])
 print("Tensão de Saída (V):", V_out[:10])
