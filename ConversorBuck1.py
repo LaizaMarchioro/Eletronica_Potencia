@@ -30,19 +30,18 @@ for i in range(len(t)):      # ele não atualiza o valor anterior. Ele aplica as
 V_out = I_L * R
 
 # Mostrar os 10 primeiros valores e plotar o gráfico
-print("Tempo (s):", t[:10])
-print("Corrente no Indutor (A):", I_L[:10])
-print("Tensão de Saída (V):", V_out[:10])
-print("Corrente máxima no indutor (A):", np.max(I_L))
-print("Tensão média de saída (V):", np.mean(V_out))
-print("Último valor da tensão de saída (V):", V_out[-1])
+print("Tempo:", t[:10])
+print("Corrente no Indutor:", I_L[:10])
+print("Tensão de Saída:", V_out[:10])
+print("Corrente máxima no indutor:", np.max(I_L))
+print("Tensão média de saída:", np.mean(V_out))
+print("Último valor da tensão de saída:", V_out[-1])
 
 plt.plot(t, I_L, label='Corrente do Indutor')
 plt.plot(t, V_out, label='Tensão de Saída')
-plt.xlabel('Tempo (s)')
+plt.xlabel('Tempo')
 plt.ylabel('Valor')
 plt.title('Simulação do Conversor Buck')
 plt.legend()
 plt.grid(True)
 plt.show()
-

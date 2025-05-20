@@ -42,13 +42,13 @@ for i in range(1, len(t)):
     V_out[i] = vout
 
 # Resultados
-print("Corrente máxima no indutor (A):", np.max(I_L))
-print("Tensão média de saída (V):", np.mean(V_out))
+print("Corrente máxima no indutor:", np.max(I_L))
+print("Tensão média de saída:", np.mean(V_out))
 
-# Gráficos
+# Gráfico
 plt.plot(t, I_L, label='Corrente no Indutor')
 plt.plot(t, V_out, label='Tensão de Saída')
-plt.xlabel('Tempo (s)')
+plt.xlabel('Tempo')
 plt.ylabel('Valor')
 plt.title('Simulação Realista do Conversor Buck')
 plt.grid(True)
