@@ -6,22 +6,30 @@ Vin = 12
 L = 1e-3            
 C = 10e-6           
 R = 10              
-Fs = 100e3          
+Fs = 100e3          # frequência de chaveamento  
 D = 0.5             # Duty cycle
 Ts = 1 / Fs         # Período
 
-# Ciclos/Tempo de simulação (nesse caso o circuito estabiliza por volta dos 150 cilcos - tentativa e erro até estabilizar)
-num_ciclos = 150
+#Tensão média de saída deve ser: 6 V (concordando com -- Voutmed = D * Vin)
+#Corrente média no indutor (ILmed): 0.6 A (Lei de Ohm: ILmed = Voutmed / R)
+#Variação de corrente no indutor (delta_IL): 30mA ((Vin - Voutmed) * D / L) * Ts 
+#ou seja, a corrente no indutor vária +-15mA em torno de 0,6A. Logo, Imin=0,585 e Imax=0,615 quando 
+#as condições iniciais forem os valores médios esperados. 
+
+
+# Ciclos/Tempo de simulação 
+# (nesse caso o circuito estabiliza entre 150 e 200 cilcos - fui na tentativa e erro até estabilizar)
+num_ciclos = 200
 t_total = num_ciclos * Ts
 dt = Ts / 1000       # Tempo total de ciclos de chaveamento - dividido em 1000 amostras por ciclo.
 t = np.arange(0, t_total, dt) 
 
+
 #  Vetores e Condiçõ9es Iniciais 
 IL = np.zeros_like(t)       
 Vc = np.zeros_like(t)       
-IL[0] = 0
-Vc[0] = 0
-
+IL[0] = 0     #Aqui quanto mais próximo esses valores iniciais estiverem dos valores médios
+Vc[0] = 0     #mais exatos serão os resultados de Iminimo e Imaximo. 
 
 
 for i in range(1, len(t)):
@@ -32,20 +40,24 @@ for i in range(1, len(t)):
         VL = Vin - Vc[i-1]   # Chave fechada (ligada): V sobre o indutor = Vin - Vout
     else:
         VL = -Vc[i-1]          # Chave aberta (desligada): V sobre o indutor = -Vout
-    
-    dIL = VL / L * dt          # atualiza a corrente no indutor 
-    IL[i] = IL[i-1] + dIL
 
+
+    
+    dIL = VL / L * dt          # atualiza a corrente no indutor. 
+    IL[i] = IL[i-1] + dIL
     Ic = IL[i] - Vc[i-1] / R          # Corrente no capacitor usando lei dos nós para atualizar VC
+
     dVc = Ic / C * dt            # atualiza tensão no capacitor
     Vc[i] = Vc[i-1] + dVc       #valor calculado anterior (i-1) + valor atual 
 
 
-Voutmed = np.mean(Vc[int(0.5 * len(t)):])      
+    
+
+Voutmed = np.mean(Vc[int(0.5 * len(t)):])      # quando o circuito já atingiu o regime permanente
 ILmed = np.mean(IL[int(0.5 * len(t)):])
-IL_min = np.min(IL)
+IL_min = np.min(IL) 
 IL_max = np.max(IL)
-modo = "CONTÍNUO" if IL_min > 0 else "DESCONTÍNUO"
+modo = "CONTÍNUO" if IL_min >= 0 else "DESCONTÍNUO"
 
 
 
