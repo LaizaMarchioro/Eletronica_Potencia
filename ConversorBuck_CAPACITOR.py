@@ -43,11 +43,11 @@ for i in range(1, len(t)):
 
 
     
-    dIL = VL / L * dt          # atualiza a corrente no indutor. 
+    dIL = (VL / L) * dt          # atualiza a corrente no indutor. 
     IL[i] = IL[i-1] + dIL
-    Ic = IL[i] - Vc[i-1] / R          # Corrente no capacitor usando lei dos nós para atualizar VC
+    Ic = IL[i] - (Vc[i-1] / R)          # Corrente no capacitor usando lei dos nós para atualizar VC
 
-    dVc = Ic / C * dt            # atualiza tensão no capacitor
+    dVc = (Ic / C) * dt            # atualiza tensão no capacitor
     Vc[i] = Vc[i-1] + dVc       #valor calculado anterior (i-1) + valor atual 
 
 

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 Vin = 12  
 L = 1e-3  
-R = 100     
+R = 200     
 Fs = 100e3 
 D = 0.5           
 Ts = 1 / Fs      
