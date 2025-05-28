@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+#FUNCIONA APENAS PARA ESSES PARAMETROS
+#CONSIDERA QUE O RESISTOR (CARGA) FAZ TODA A FILTRAGEM NECESSÁRIA E POR ISSO NÃO TEM CAPACITOR
 Vin = 12  
 L = 1e-3  
 R = 200     
