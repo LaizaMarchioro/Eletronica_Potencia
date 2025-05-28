@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #CONSIDERA QUE O RESISTOR (CARGA) FAZ TODA A FILTRAGEM NECESSÁRIA E POR ISSO NÃO TEM CAPACITOR
 Vin = 12  
 L = 1e-3  
-R = 200     
+R = 100     
 Fs = 100e3 
 D = 0.5           
 Ts = 1 / Fs      
